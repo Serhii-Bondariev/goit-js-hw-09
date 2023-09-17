@@ -38,15 +38,15 @@ document.querySelector(".form").addEventListener("submit", function (e) {
             results.forEach((result) => {
                 if (result.status === "fulfilled") {
                     // Відображаємо сповіщення успішного виконання промісу.
-                    Notiflix.Notify.Success(`✅ Fulfilled promise ${result.value.position} in ${result.value.delay}ms`);
+                    Notiflix.Notify.success(`✅ Fulfilled promise ${result.value.position} in ${result.value.delay}ms`);
                 } else {
                     // Відображаємо сповіщення про відхилення промісу та деталі помилки.
-                    Notiflix.Notify.Failure(`❌ Rejected promise ${result.reason.position} in ${result.reason.delay}ms`);
+                    Notiflix.Notify.failure(`❌ Rejected promise ${result.reason.position} in ${result.reason.delay}ms`);
                 }
             });
         })
         .catch((error) => {
             // Відображаємо сповіщення про помилку під час обробки промісів.
-            Notiflix.Notify.Failure("Error handling promises");
+            Notiflix.Notify.failure("Error handling promises");
         });
 });
