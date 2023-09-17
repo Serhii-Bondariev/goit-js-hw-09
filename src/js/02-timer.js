@@ -50,7 +50,7 @@ function startCountdown(targetDate) {
       // Якщо час минув, зупиняємо інтервал та активуємо кнопку "Start" знову
       clearInterval(timerInterval);
       document.querySelector("[data-start]").disabled = false;
-      return alert("Відлік часу закінчився!");
+      return alert("Відлік завершено!");
     }
 
     // Розраховуємо дні, години, хвилини та секунди до обраної дати
