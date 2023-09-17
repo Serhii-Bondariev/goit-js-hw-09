@@ -1,6 +1,5 @@
-// 03-promises.js
-import Notiflix from 'notiflix';
 
+import Notiflix from 'notiflix';
 // Функція createPromise створює новий проміс з випадковою можливістю виконання або відхилення.
 function createPromise(position, delay) {
     return new Promise((resolve, reject) => {
