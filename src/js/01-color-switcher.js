@@ -1,3 +1,5 @@
+import flatpickr from "flatpickr";
+import Notiflix from 'notiflix';
 // Отримуємо кнопки "Start" і "Stop" за їхніми атрибутами data-start і data-stop
 const startBtn = document.querySelector('[data-start]');
 const stopBtn = document.querySelector('[data-stop]');

@@ -1,5 +1,7 @@
 // Імпортуємо бібліотеку flatpickr з пакету "flatpickr"
 import flatpickr from "flatpickr";
+// Імпортуємо бібліотеку Notiflix з пакету "notiflix"
+import Notiflix from 'notiflix';
 // Додаємо додатковий імпорт стилів для бібліотеки flatpickr
 import "flatpickr/dist/flatpickr.min.css";
 
@@ -21,7 +23,7 @@ const options = {
     // Перевіряємо, чи обрана дата не менше поточної
     if (selectedDate <= currentDate) {
       // Виводимо повідомлення користувачу, яке запитує обрати майбутню дату
-      alert("Виберіть потрібну дату!");
+      Notiflix.Notify.warning("Please choose a date in the future");
       // Очищаємо поле вибору дати та часу
       document.getElementById("datetime-picker").value = "";
       return;
@@ -49,8 +51,8 @@ function startCountdown(targetDate) {
     if (timeDifference <= 0) {
       // Якщо час минув, зупиняємо інтервал та активуємо кнопку "Start" знову
       clearInterval(timerInterval);
-      document.querySelector("[data-start]").disabled = false;
-      return alert("Відлік завершено!");
+      document.querySelector("[data-start]");
+      return Notiflix.Notify.success("Відлік завершено!");
     }
 
     // Розраховуємо дні, години, хвилини та секунди до обраної дати

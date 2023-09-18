@@ -46,6 +46,6 @@ document.querySelector(".form").addEventListener("submit", function (e) {
         })
         .catch((error) => {
             // Відображаємо сповіщення про помилку під час обробки промісів.
-            Notiflix.Notify.failure("Error handling promises");
+            Notiflix.Notify.warning("Error handling promises");
         });
 });
