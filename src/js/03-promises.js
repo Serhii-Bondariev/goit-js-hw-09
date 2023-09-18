@@ -1,5 +1,5 @@
-
 import Notiflix from 'notiflix';
+
 // Функція createPromise створює новий проміс з випадковою можливістю виконання або відхилення.
 function createPromise(position, delay) {
     return new Promise((resolve, reject) => {
@@ -15,37 +15,29 @@ function createPromise(position, delay) {
 }
 
 // Додаємо слухач події 'submit' до форми.
-document.querySelector(".form").addEventListener("submit", function (e) {
+document.querySelector(".form").addEventListener("submit", async function (e) {
     e.preventDefault();
     const initialDelay = parseInt(this.querySelector("[name='delay']").value);
     const step = parseInt(this.querySelector("[name='step']").value);
     const amount = parseInt(this.querySelector("[name='amount']").value);
-    const promises = [];
 
-    let currentDelay = initialDelay;
-
-    // Генеруємо задану кількість промісів і додаємо їх до масиву promises.
-    for (let i = 0; i < amount; i++) {
-        promises.push(createPromise(i + 1, currentDelay));
-        currentDelay += step;
+    // Створюємо функцію для виконання промісів послідовно в порядку їхнього завершення.
+    async function executePromisesSequentially() {
+        let currentDelay = initialDelay;
+        for (let i = 1; i <= amount; i++) {
+            try {
+                const result = await createPromise(i, currentDelay);
+                // Відображаємо сповіщення успішного виконання промісу.
+                Notiflix.Notify.success(`✅ Fulfilled promise ${result.position} in ${result.delay}ms`);
+            } catch (error) {
+                // Відображаємо сповіщення про відхилення промісу та деталі помилки.
+                Notiflix.Notify.failure(`❌ Rejected promise ${error.position} in ${error.delay}ms`);
+            }
+            currentDelay += step;
+        }
     }
 
-    // Використовуємо Promise.allSettled для обробки всіх промісів одночасно.
-    Promise.allSettled(promises)
-        .then((results) => {
-            // Обробляємо результати всіх промісів.
-            results.forEach((result) => {
-                if (result.status === "fulfilled") {
-                    // Відображаємо сповіщення успішного виконання промісу.
-                    Notiflix.Notify.success(`✅ Fulfilled promise ${result.value.position} in ${result.value.delay}ms`);
-                } else {
-                    // Відображаємо сповіщення про відхилення промісу та деталі помилки.
-                    Notiflix.Notify.failure(`❌ Rejected promise ${result.reason.position} in ${result.reason.delay}ms`);
-                }
-            });
-        })
-        .catch((error) => {
-            // Відображаємо сповіщення про помилку під час обробки промісів.
-            Notiflix.Notify.warning("Error handling promises");
-        });
+    // Викликаємо функцію для виконання промісів послідовно.
+    executePromisesSequentially();
 });
+
