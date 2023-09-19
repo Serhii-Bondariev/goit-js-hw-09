@@ -5,6 +5,9 @@ import "flatpickr/dist/flatpickr.min.css";
 // Імпортуємо бібліотеку Notiflix з пакету "notiflix"
 import Notiflix from 'notiflix';
 
+// Флаг, що вказує на активність таймера
+let timerActive = false;
+
 // Налаштування для бібліотеки flatpickr
 const options = {
   // Включаємо можливість вибору часу
@@ -28,14 +31,39 @@ const options = {
       document.getElementById("datetime-picker").value = "";
       return;
     }
-
-    // Запускаємо функцію для початку зворотного відліку
-    startCountdown(selectedDate);
   },
 };
 
 // Ініціалізуємо об'єкт flatpickr зі вказаними налаштуваннями на полі з id "datetime-picker"
 const picker = flatpickr("#datetime-picker", options);
+
+// Додаємо обробник події для кнопки "Start"
+document.getElementById("start-button").addEventListener("click", function () {
+  if (timerActive) {
+    // Якщо таймер вже активний, не робимо нічого
+    return;
+  }
+
+  const selectedDate = picker.selectedDates[0];
+  const currentDate = new Date();
+
+  // Перевіряємо, чи обрана дата не менше поточної
+  if (selectedDate <= currentDate) {
+    // Виводимо повідомлення користувачу, яке запитує обрати майбутню дату
+    Notiflix.Notify.warning("Please choose a date in the future");
+    // Очищаємо поле вибору дати та часу
+    document.getElementById("datetime-picker").value = "";
+    return;
+  }
+
+  // Деактивуємо кнопку "Start", щоб не можна було запустити новий таймер
+  document.getElementById("start-button").setAttribute("disabled", true);
+  // Позначаємо таймер як активний
+  timerActive = true;
+
+  // Запускаємо функцію для початку зворотного відліку
+  startCountdown(selectedDate);
+});
 
 // Функція для початку зворотного відліку
 function startCountdown(targetDate) {
@@ -49,10 +77,13 @@ function startCountdown(targetDate) {
 
     // Перевіряємо, чи час не минув
     if (timeDifference <= 0) {
-      // Якщо час минув, зупиняємо інтервал та активуємо кнопку "Start" знову
+      // Якщо час минув, зупиняємо інтервал
       clearInterval(timerInterval);
-      document.querySelector("[data-start]");
-      return Notiflix.Notify.success("Cuntdown finished!");
+      // Позначаємо таймер як неактивний
+      timerActive = false;
+      // Деактивуємо кнопку "Start", щоб можна було запустити новий таймер
+      document.getElementById("start-button").removeAttribute("disabled");
+      return Notiflix.Notify.success("Countdown finished!");
     }
 
     // Розраховуємо дні, години, хвилини та секунди до обраної дати
