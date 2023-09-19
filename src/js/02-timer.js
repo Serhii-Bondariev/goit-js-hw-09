@@ -1,9 +1,9 @@
 // Імпортуємо бібліотеку flatpickr з пакету "flatpickr"
 import flatpickr from "flatpickr";
-// Імпортуємо бібліотеку Notiflix з пакету "notiflix"
-import Notiflix from 'notiflix';
 // Додаємо додатковий імпорт стилів для бібліотеки flatpickr
 import "flatpickr/dist/flatpickr.min.css";
+// Імпортуємо бібліотеку Notiflix з пакету "notiflix"
+import Notiflix from 'notiflix';
 
 // Налаштування для бібліотеки flatpickr
 const options = {
