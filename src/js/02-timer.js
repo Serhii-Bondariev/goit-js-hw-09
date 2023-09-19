@@ -52,7 +52,7 @@ function startCountdown(targetDate) {
       // Якщо час минув, зупиняємо інтервал та активуємо кнопку "Start" знову
       clearInterval(timerInterval);
       document.querySelector("[data-start]");
-      return Notiflix.Notify.success("Cuntdown finished");
+      return Notiflix.Notify.success("Cuntdown finished!");
     }
 
     // Розраховуємо дні, години, хвилини та секунди до обраної дати
